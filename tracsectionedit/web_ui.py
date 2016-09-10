@@ -55,7 +55,11 @@ class WikiSectionEditModule(Component):
     def post_process_request(self, req, template, data, content_type):
         if not 'action' in req.args \
             and 'WIKI_MODIFY' in req.perm:
-            add_script(req, 'tracsectionedit/js/tracsectionedit.js')
+            theme_name = self.config.get('theme', 'theme', '')
+            if theme_name and theme_name.startswith('bootstrap_'):
+                add_script(req, 'tracsectionedit/js/tracsectionedit-fa.js')
+            else:
+                add_script(req, 'tracsectionedit/js/tracsectionedit.js')
         return template, data, content_type
 
     # ITemplateStreamFilter methods
